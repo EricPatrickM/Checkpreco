@@ -24,9 +24,9 @@
 - sudo docker run hello-world
 
 # Crie uma pasta e clone o projeto
--cd ~
--git clone https://github.com/EricPatrickM/Checkpreco
--cd Checkpreco
--docker compose up -d
+- cd ~
+- git clone https://github.com/EricPatrickM/Checkpreco
+- cd Checkpreco
+- docker compose up -d
 
 # As portas que estão rodando está no docker-compose.yaml
