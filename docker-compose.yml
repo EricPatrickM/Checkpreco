@@ -28,6 +28,7 @@ services:
       - DB_DATABASE=bitnami_myapp
     volumes:
       - '.backend/checkpreco:/app'
+    command: php a
     networks:
       - app-tier
     depends_on:
