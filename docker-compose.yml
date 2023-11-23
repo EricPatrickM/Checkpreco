@@ -1,0 +1,85 @@
+# Copyright VMware, Inc.
+# SPDX-License-Identifier: APACHE-2.0
+
+version: '2'
+networks:
+  app-tier:
+    driver: bridge
+
+services:
+  mariadb:
+    image: docker.io/bitnami/mariadb:11.1
+    environment:
+      # ALLOW_EMPTY_PASSWORD is recommended only for development.
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=bn_myapp
+      - MARIADB_DATABASE=bitnami_myapp
+    networks:
+      - app-tier
+
+  backend:
+    image: docker.io/bitnami/laravel:10
+    ports:
+      - '8000:8000'
+    environment:
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_USERNAME=bn_myapp
+      - DB_DATABASE=bitnami_myapp
+    volumes:
+      - '.backend/checkpreco:/app'
+    networks:
+      - app-tier
+    depends_on:
+      - mariadb
+
+  dashboard:
+    build:
+      context: dashboard
+      args:
+        FLASK_APP: app.py
+        FLASK_ENV: development
+      target: builder
+    volumes:
+      - ./dashboard/dashboard:/code
+    command: flask --app app.py --debug run --host=0.0.0.0
+    ports:
+      - 8001:5000
+    environment:
+      - DATABASE_NAME=postgres
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=postgres
+      - DATABASE_PORT=5432
+    depends_on:
+      - mariadb
+    networks:
+      - app-tier
+
+  frontend:
+    build:
+      context: frontend
+      dockerfile: Dockerfile.yaml
+    volumes:
+      - ./frontend/frontend:/code
+    #  - ./static:/code/src/static
+    command: npm run dev
+    ports:
+      - 8002:80
+    environment:
+      - DATABASE_NAME=mysql
+      - DATABASE_USER=mysql
+      - DATABASE_PASSWORD=example
+      - DATABASE_PORT=7999
+    depends_on:
+      - backend  
+    networks:
+      - app-tier
+  #redis:
+  #  image: 'bitnami/redis:latest'
+  #  environment:
+  #    - ALLOW_EMPTY_PASSWORD=yes
+  #  ports:
+  #    - '6379:6379'
+  #  command: /opt/bitnami/scripts/redis/run.sh --maxmemory 100mb
+  #  networks:
+  #    - app-tier
