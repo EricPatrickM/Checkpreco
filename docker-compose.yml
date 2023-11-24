@@ -16,6 +16,11 @@ services:
       - MARIADB_DATABASE=bitnami_myapp
     networks:
       - app-tier
+    healthcheck:
+      test: mariadb-admin ping -h mariadb -u root
+      interval: 5s
+      timeout: 5s
+      retries: 55
 
   backend:
     image: docker.io/bitnami/laravel:10
@@ -27,12 +32,13 @@ services:
       - DB_USERNAME=bn_myapp
       - DB_DATABASE=bitnami_myapp
     volumes:
-      - '.backend/checkpreco:/app'
-    command: php a
+      - './backend/checkpreco:/app'
+    #command: php artisan migrate && php artisan db:seed --class=Neighborhood
     networks:
       - app-tier
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
 
   dashboard:
     build:
@@ -52,7 +58,8 @@ services:
       - DATABASE_PASSWORD=postgres
       - DATABASE_PORT=5432
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     networks:
       - app-tier
 
@@ -72,7 +79,8 @@ services:
       - DATABASE_PASSWORD=example
       - DATABASE_PORT=7999
     depends_on:
-      - backend  
+      mariadb:
+        condition: service_healthy 
     networks:
       - app-tier
   #redis:
