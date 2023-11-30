@@ -23,7 +23,8 @@ class AllStablishmentControllerRequest extends FormRequest
     {
         return [
             'name' => 'required|min:2|max:255',
-            'fk_stablishment_type_id' => 'required|exists:stablishment_types,id'
+            'fk_stablishment_type_id' => 'required|numeric|exists:stablishment_types,id',
+            'fk_address_id' => 'required|numeric|exists:addresses,id',
         ];
     }
 }

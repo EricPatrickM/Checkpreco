@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Stablishment;
 use App\Http\Requests\AllStablishmentControllerRequest;
+use App\Http\Resources\stablishment\StablishmentResource;
 
 class StablishmentController extends Controller
 {
     public function create(AllStablishmentControllerRequest $request){
         $data = $request->validated();
-        return $data;
         $stablishment = Stablishment::create($data);
         
         if(! $stablishment){
@@ -20,6 +20,7 @@ class StablishmentController extends Controller
 
     public function show(){
         $stablishment = Stablishment::orderBy('name')->paginate(10);
+        $stablishment->data = StablishmentResource::collection($stablishment);
         return response()->json($stablishment);
     }
     

@@ -46,7 +46,10 @@ class AddressController extends Controller
         return response('', 204);
     }
 
-
+    public function showById($id){
+        $city = Address::select(['city', 'id'])->findOrFail($id);
+        return response()->json($city, 200);
+    }
     public function showState(){
         return response()->json(json_decode(file_get_contents(Storage::path('/public/neighborResume.json'))));
     }

@@ -30,6 +30,7 @@ Route::middleware('auth:sanctum')->controller(BatchController::class)->prefix('b
 });
 
 Route::middleware('auth:sanctum')->controller(AddressController::class)->prefix('address')->group(function(){
+    Route::get('/{id}', 'showById');
     Route::get('/showState', 'showState');
     Route::get('/showCity/{UF}', 'showCity');
     Route::get('/showNeighborhood/{city}', 'showNeighborhood');
@@ -45,14 +46,14 @@ Route::/*middleware('auth:sanctum')->*/controller(StablishmentTypeController::cl
     Route::put('/{id}', 'update');
 });
 
-Route::/*middleware('auth:sanctum')->*/controller(StablishmentController::class)->prefix('stablishment')->group(function(){
+Route::middleware('auth:sanctum')->controller(StablishmentController::class)->prefix('stablishment')->group(function(){
     Route::get('', 'show');
     Route::post('', 'create');
     Route::delete('/{id}', 'delete');
     Route::put('/{id}', 'update');
 });
 
-Route::/*middleware('auth:sanctum')->*/controller(RegisterController::class)->prefix('register')->group(function(){
+Route::middleware('auth:sanctum')->controller(RegisterController::class)->prefix('register')->group(function(){
     Route::get('/{id}', 'show');
     Route::post('', 'create');
     Route::delete('/{id}', 'delete');
