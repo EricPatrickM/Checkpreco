@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Register;
 
-class Batch extends Model
+class Stablishment extends Model
 {
     use HasFactory;
-    protected $table = 'batchs';
-
+    protected $table = 'stablishments';
     protected $fillable = [
-        'name',
+        
     ];
-    /*public function register(): BelongsTo{
-        return $this->belongsTo(Register::class);
-    }*/
+
+    public function stablishmentType(): BelongsTo{
+        return $this->belongsTo(StablishmentType::class, 'fk_stablishment_type_id');
+    }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('registers', function (Blueprint $table) {
             $table->id();
-            $table->double('preco', 5, 2);
+            $table->double('price', 5, 2);
             $table->timestamps();
         });
     }

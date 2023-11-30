@@ -24,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type'
     ];
 
     /**
@@ -47,7 +48,7 @@ class User extends Authenticatable
     ];
 
 
-    public function register(): BelongsTo{
+    /*public function register(): BelongsTo{
         return $this->belongsTo(Register::class);
-    }
+    }*/
 }

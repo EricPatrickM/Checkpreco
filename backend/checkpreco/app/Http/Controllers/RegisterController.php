@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
-    public function create(Request $request/*, $changedBy="Admin"*/) {
-        return '5';
+    public function create(Request $request, $id) {
+        $request -> validate([
+            'price' => 'bail|required|numeric|regex:/^(\d{1,5}}(\.\d{1,2})?)?$/',
+        ]);
     }
 
 

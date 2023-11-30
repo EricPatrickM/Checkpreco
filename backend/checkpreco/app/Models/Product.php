@@ -16,10 +16,10 @@ class Product extends Model
         'name',
         'description',
         'measurementUnit',
-        'changedBy',
+        'barCode',
     ];
 
-    public function register(): BelongsTo{
+    /*public function register(): BelongsTo{
         return $this->belongsTo(Register::class);
-    }
+    }*/
 }
