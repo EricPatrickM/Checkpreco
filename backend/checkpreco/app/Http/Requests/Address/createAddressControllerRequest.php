@@ -25,7 +25,7 @@ class createAddressControllerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'state' => 'bail|required|max:2|min:2',
+            'state' => 'bail|required|max:2|min:2|uppercase',
             'city' => 'bail|required|max:255|min:3',
             'neighborhood' => 'bail|required|max:255|min:3',
         ];

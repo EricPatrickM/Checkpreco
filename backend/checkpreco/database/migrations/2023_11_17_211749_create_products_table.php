@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('measurementUnit');
-            $table->string('changedBy');
+            $table->string('barCode')->nullable();
             $table->timestamps();
         });
     }
