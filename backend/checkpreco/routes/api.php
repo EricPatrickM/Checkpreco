@@ -42,8 +42,8 @@ Route::/*middleware('auth:sanctum')->*/controller(AddressController::class)->pre
     Route::get('/search/neighborhood/{city}/{neighborhood}', 'searchNeighborhood');
     
     
-    Route::get('/{id}', 'showById');
     Route::get('/showState', 'showState');
+    Route::get('/{id}', 'showById');
     Route::get('/showCity/{UF}', 'showCity');
     Route::get('/showNeighborhood/{city}', 'showNeighborhood');
     
