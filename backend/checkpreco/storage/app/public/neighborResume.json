@@ -1,0 +1,139 @@
+{
+    "data": [
+        {
+            "Nome": "Acre",
+            "Uf": "AC",
+            "Regiao": 1
+        },
+        {
+            "Nome": "Alagoas",
+            "Uf": "AL",
+            "Regiao": 2
+        },
+        {
+            "Nome": "Amapá",
+            "Uf": "AP",
+            "Regiao": 1
+        },
+        {
+            "Nome": "Amazonas",
+            "Uf": "AM",
+            "Regiao": 1
+        },
+        {
+            "Nome": "Bahia",
+            "Uf": "BA",
+            "Regiao": 2
+        },
+        {
+            "Nome": "Ceará",
+            "Uf": "CE",
+            "Regiao": 2
+        },
+        {
+            "Nome": "Distrito Federal",
+            "Uf": "DF",
+            "Regiao": 5
+        },
+        {
+            "Nome": "Espírito Santo",
+            "Uf": "ES",
+            "Regiao": 3
+        },
+        {
+            "Nome": "Goiás",
+            "Uf": "GO",
+            "Regiao": 5
+        },
+        {
+            "Nome": "Maranhão",
+            "Uf": "MA",
+            "Regiao": 2
+        },
+        {
+            "Nome": "Mato Grosso",
+            "Uf": "MT",
+            "Regiao": 5
+        },
+        {
+            "Nome": "Mato Grosso do Sul",
+            "Uf": "MS",
+            "Regiao": 5
+        },
+        {
+            "Nome": "Minas Gerais",
+            "Uf": "MG",
+            "Regiao": 3
+        },
+        {
+            "Nome": "Pará",
+            "Uf": "PA",
+            "Regiao": 1
+        },
+        {
+            "Nome": "Paraíba",
+            "Uf": "PB",
+            "Regiao": 2
+        },
+        {
+            "Nome": "Paraná",
+            "Uf": "PR",
+            "Regiao": 4
+        },
+        {
+            "Nome": "Pernambuco",
+            "Uf": "PE",
+            "Regiao": 2
+        },
+        {
+            "Nome": "Piauí",
+            "Uf": "PI",
+            "Regiao": 2
+        },
+        {
+            "Nome": "Rio de Janeiro",
+            "Uf": "RJ",
+            "Regiao": 3
+        },
+        {
+            "Nome": "Rio Grande do Norte",
+            "Uf": "RN",
+            "Regiao": 2
+        },
+        {
+            "Nome": "Rio Grande do Sul",
+            "Uf": "RS",
+            "Regiao": 4
+        },
+        {
+            "Nome": "Rondônia",
+            "Uf": "RO",
+            "Regiao": 1
+        },
+        {
+            "Nome": "Roraima",
+            "Uf": "RR",
+            "Regiao": 1
+        },
+        {
+            "Nome": "Santa Catarina",
+            "Uf": "SC",
+            "Regiao": 4
+        },
+        {
+            "Nome": "São Paulo",
+            "Uf": "SP",
+            "Regiao": 3
+        },
+        {
+            "Nome": "Sergipe",
+            "Uf": "SE",
+            "Regiao": 2
+        },
+        {
+            "Nome": "Tocantins",
+            "Uf": "TO",
+            "Regiao": 1
+        }
+    ]
+}

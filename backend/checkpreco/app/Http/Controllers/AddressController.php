@@ -71,6 +71,7 @@ class AddressController extends Controller
     }
 
     public function showState(){
+        //dd(Storage::path('/public/neighborResume.json'));
         return response()->json(json_decode(file_get_contents(Storage::path('/public/neighborResume.json'))));
     }
 
