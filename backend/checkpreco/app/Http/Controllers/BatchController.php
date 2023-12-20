@@ -2,76 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\Batch\createBatchControllerRequest;
 
 use App\Models\Batch;
+use Exception;
 
 class BatchController extends Controller
 {
-    public function create(Request $request){
-        $data = $request->json()->all();
-        $validator = validator($data, [
-            'batchDate' => 'required|max:255',
-        ]);
+    public function create(createBatchControllerRequest $request){
+        $data = $request->validated();
+        $batch = Batch::create($data);
 
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
+        if($batch){
+            return response()->json([], 201);
         }
-        $batch = new Batch;
-        $batch->batchDate = $data['batchDate'];
-        $batch->save();
-
-        return response("",201);
+        return response()->json([], 500);
     }
 
-    public function show(Request $request){
-        $page = $request->query('page');
-
-        $validator = validator(['page' => $page],[
-            'page'  => 'bail|required|numeric',
-        ]);
-
-        if($validator->fails()) {
-            return response()->json(['errors' => ['page' => ['page query is required.']]], 400);
-        }
-
-        $batch = Batch::paginate(10);
-        return response()->json($batch);
+    public function show($id){
+        $batch = Batch::where('fk_stablishment_types_id', $id)->orderBy('created_at', 'desc')->paginate(10);
+        return response()->json($batch, 200);
     }
 
     public function delete($id){
-        $validator = validator(['id' => $id], [
-            'id'  => 'bail|required|numeric',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
+        try{
+            Batch::findOrFail($id)->delete();
+            return response()->json([], 204);
+        } catch(Exception $e){
+            return response()->json([], 500); 
         }
-
-        $product = Product::where('id', '=', $id)->delete();
-        if ($product == 0) {
-            return response()->json(['errors' => 'Nenhum item encontrado'], 404);
-        }
-        return response('', 200);
     }
 
-    public function update($id, Request $request){
-        $data = $request->json()->all();
-        $validator = validator($data + ['id' => $id], [
-            'batchDate' => 'required|max:255',
-            'id'  => 'bail|required|numeric',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 400);
+    public function update($id, createBatchControllerRequest $request){
+        try{
+            $data = $request->validated();
+            $batch = Batch::findOrFail($id)->update($data);
+            if ($batch != 0) {
+                return response()->json([],200);
+            }
+            return response()->json([], 404);
+        } catch(Exception $e){
+            return response()->json([], 500);
         }
-        $batch = Batch::where('id','=', $id)->update(
-            ['batchDate' => $data['batchDate']],
-        );
-
-        if ($batch == 0) {
-            return response()->json(['errors' => 'Nenhum item encontrado'], 404);
-        }
-
-        return response("",201);
     }
 }

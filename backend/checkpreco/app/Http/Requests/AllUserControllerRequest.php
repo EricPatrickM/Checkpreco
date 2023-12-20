@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Address;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class createAddressControllerRequest extends FormRequest
+class AllUserControllerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,14 +24,14 @@ class createAddressControllerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'state' => 'bail|required|max:2|min:2|uppercase',
-            'city' => 'bail|required|max:255|min:3',
-            'neighborhood' => 'bail|required|max:255|min:3',
+            'email' => 'required|email|max:100|unique:users,email',
+            'password' => 'required|min:6|max:100',
+            'name' => 'required|min:2|max:100',
+            'type' => 'required|in:admin,colaborator,guest',
         ];
     }
     
-    protected function failedValidation(Validator $validator)
-    {
+    protected function failedValidation(Validator $validator){
         throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 400));
     }
 }

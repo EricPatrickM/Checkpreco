@@ -1,11 +1,7 @@
 # Copyright VMware, Inc.
 # SPDX-License-Identifier: APACHE-2.0
 
-version: '2'
-networks:
-  app-tier:
-    driver: bridge
-
+version: '3'
 services:
   mariadb:
     image: docker.io/bitnami/mariadb:11.1
@@ -14,8 +10,11 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
       - MARIADB_USER=bn_myapp
       - MARIADB_DATABASE=bitnami_myapp
-    networks:
-      - app-tier
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "mariadb", "-u", "root"]
+      interval: 5s
+      timeout: 5s
+      retries: 55
 
   backend:
     image: docker.io/bitnami/laravel:10
@@ -27,12 +26,12 @@ services:
       - DB_USERNAME=bn_myapp
       - DB_DATABASE=bitnami_myapp
     volumes:
-      - '.backend/checkpreco:/app'
-    command: php a
-    networks:
-      - app-tier
+      - './backend/checkpreco:/app'
+    #command: php artisan migrate 
+    #&& php artisan db:seed --class=Neighborhood
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
 
   dashboard:
     build:
@@ -52,9 +51,8 @@ services:
       - DATABASE_PASSWORD=postgres
       - DATABASE_PORT=5432
     depends_on:
-      - mariadb
-    networks:
-      - app-tier
+      mariadb:
+        condition: service_healthy
 
   frontend:
     build:
@@ -72,9 +70,8 @@ services:
       - DATABASE_PASSWORD=example
       - DATABASE_PORT=7999
     depends_on:
-      - backend  
-    networks:
-      - app-tier
+      mariadb:
+        condition: service_healthy 
   #redis:
   #  image: 'bitnami/redis:latest'
   #  environment:

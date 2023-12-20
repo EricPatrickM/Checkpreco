@@ -30,3 +30,6 @@
 - docker compose up -d
 
 # As portas que estão rodando está no docker-compose.yaml
+# Execute docker compose exec backend /bin/bash:
+- php artisan migrate
+- php artisan db:seed --class=Neighborhood

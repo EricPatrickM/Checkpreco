@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+use App\Models\Register;
 
 class Product extends Model
 {
@@ -13,6 +16,11 @@ class Product extends Model
         'name',
         'description',
         'measurementUnit',
-        'changedBy',
+        'barCode',
+        'fk_stablishment_types_id'
     ];
+
+    /*public function register(): BelongsTo{
+        return $this->belongsTo(Register::class);
+    }*/
 }

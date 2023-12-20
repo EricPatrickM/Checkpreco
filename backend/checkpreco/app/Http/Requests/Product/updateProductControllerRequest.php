@@ -25,9 +25,11 @@ class updateProductControllerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'nullable|max:255|min:3',
-            'description' => 'nullable|max:255',
-            'measurementUnit' => 'nullable|min:2|max:255',
+            'name' => 'required|max:255|min:3',
+            'description' => 'max:255',
+            'measurementUnit' => 'required|max:255',
+            'barCode' => 'nullable|regex:/^\d{13}$/',
+            'fk_stablishment_types_id' => 'required|exists:stablishment_types,id'
         ];
     }
 

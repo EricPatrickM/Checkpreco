@@ -11,20 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('stablishments', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
-            $table->string('measurementUnit');
-            $table->string('barCode')->nullable();
-            
             $table->unsignedBigInteger('fk_stablishment_types_id');
+            $table->unsignedBigInteger('fk_address_id');
             $table->foreign('fk_stablishment_types_id')
                 ->references('id')
                 ->on('stablishment_types')
                 ->onDelete('cascade')
             ->nullable(false);
-
+        
+            $table->foreign('fk_address_id')
+                ->references('id')
+                ->on('addresses')
+                ->onDelete('cascade')
+            ->nullable(false);
+            
             $table->timestamps();
         });
     }
@@ -34,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('stablishments');
     }
 };

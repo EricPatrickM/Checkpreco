@@ -11,22 +11,21 @@ class JsonHeaderMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response)  $next
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!$request->wantsJson()) {
-            return response()->json([], 415);
-        }
-
         if ($request->isMethod('post', 'put', 'patch') && !$request->isJson()) {
             return response()->json(['error' => 'Payload is not JSON!'], 415);
         }
-        
+
+        /** @var \Illuminate\Http\Response $response */
         $response = $next($request);
         
-        $response->header('Content-type', 'application/json; charset=utf-8');
-        $response->setEncodingOptions(JSON_UNESCAPED_UNICODE);
+        $response->header('Content-Type', 'application/json; charset=utf-8');
+        $response->setContent(json_encode($response->original, JSON_UNESCAPED_UNICODE));
+        /*$response->header('Content-type', 'application/json; charset=utf-8');
+        $response->setEncodingOptions(JSON_UNESCAPED_UNICODE);*/
         return $response;
         
     }

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+
 class signupLoginControllerRequest extends FormRequest
 {
     /**
@@ -26,7 +27,8 @@ class signupLoginControllerRequest extends FormRequest
         return [
             'email' => 'required|email|max:100|unique:users',
             'password' => 'required|min:6|max:100',
-            'name' => 'required|min:2|max:100'
+            'name' => 'required|min:2|max:100',
+            'type' => 'required|in:admin,colaborator,guest',
         ];
 
     }
