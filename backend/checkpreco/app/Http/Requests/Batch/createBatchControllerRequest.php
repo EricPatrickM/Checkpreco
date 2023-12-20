@@ -23,6 +23,7 @@ class createBatchControllerRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:batchs',
+            'fk_stablishment_types_id' => 'required|exists:stablishment_types,id'
         ];
     }
 }

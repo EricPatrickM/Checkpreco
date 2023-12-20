@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Product;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class updateProductControllerRequest extends FormRequest
+class AllUserControllerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,16 +24,14 @@ class updateProductControllerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:255|min:3',
-            'description' => 'max:255',
-            'measurementUnit' => 'required|max:255',
-            'barCode' => 'nullable|regex:/^\d{13}$/',
-            'fk_stablishment_types_id' => 'required|exists:stablishment_types,id'
+            'email' => 'required|email|max:100|unique:users,email',
+            'password' => 'required|min:6|max:100',
+            'name' => 'required|min:2|max:100',
+            'type' => 'required|in:admin,colaborator,guest',
         ];
     }
-
-    protected function failedValidation(Validator $validator)
-    {
+    
+    protected function failedValidation(Validator $validator){
         throw new HttpResponseException(response()->json(['errors' => $validator->errors()], 400));
     }
 }

@@ -10,11 +10,31 @@ use App\Http\Requests\Address\createAddressControllerRequest;
 
 class AddressController extends Controller
 {
+    public function searchCity($city){
+        $data = Address::selectRaw('DISTINCT city')
+            ->where('city', 'REGEXP', '^' . $city . '.*')
+            ->take(10)
+        ->get();
+        return response()->json($data, 200);
+    }
+
+    public function searchNeighborhood($city, $neighborhood){
+        $data = Address::select(['city', 'neighborhood', 'id'])
+            ->where('city', $city)
+            ->where('neighborhood', 'REGEXP', '^' . $neighborhood . '.*')
+            ->limit(10)
+        ->get();
+        return response()->json($data, 200);
+    }
+
     public function create(createAddressControllerRequest $request){
         $data = $request->validated();
         $exists = Address::where('state', $data["state"])
-        ->where('city', $data["city"])
-        ->where('neighborhood', $data["neighborhood"]);
+            ->where('city', $data["city"])
+            ->where('neighborhood', $data["neighborhood"])
+            ->get()
+        ->first();
+
         if($exists){
             return(response()->json(["error" => "address already exists!"], 400));
         }
@@ -40,8 +60,7 @@ class AddressController extends Controller
         ->delete();
 
         if ($address == 0) {
-            return response()->json(
-                ['errors' => $id>14320404?'Nenhum item encontrado':'Não autorizado!'], 404);
+            return response()->json([], $id>14320404? 404: 403);
         }
         return response('', 204);
     }
@@ -50,6 +69,7 @@ class AddressController extends Controller
         $city = Address::select(['city', 'id'])->findOrFail($id);
         return response()->json($city, 200);
     }
+
     public function showState(){
         return response()->json(json_decode(file_get_contents(Storage::path('/public/neighborResume.json'))));
     }

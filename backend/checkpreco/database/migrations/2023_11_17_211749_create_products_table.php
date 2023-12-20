@@ -17,6 +17,14 @@ return new class extends Migration
             $table->string('description');
             $table->string('measurementUnit');
             $table->string('barCode')->nullable();
+            
+            $table->unsignedBigInteger('fk_stablishment_types_id');
+            $table->foreign('fk_stablishment_types_id')
+                ->references('id')
+                ->on('stablishment_types')
+                ->onDelete('cascade')
+            ->nullable(false);
+
             $table->timestamps();
         });
     }

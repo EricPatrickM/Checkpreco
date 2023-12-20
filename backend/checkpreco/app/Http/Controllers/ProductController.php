@@ -15,20 +15,23 @@ use App\Http\Resources\ProductResource;
 
 class ProductController extends Controller
 {
+    public function searchBarCode($id){
+        $data = Product::select('id')->where('barCode', $id)->get()->first();
+        return response()->json($data, 200);
+    }
+
     public function create(createProductControllerRequest $request) {
         $data = $request->validated();
-        $user = Product::create($data);
 
+        $user = Product::create($data);
         if($user){
             return response()->json([], 201);
         }
         return(response()->json([], 500));
     }
 
-
-
-    public function show() {
-        $product = Product::paginate(10);
+    public function show($id) {
+        $product = Product::where('fk_stablishment_types_id', $id)->paginate(10);
         $product->data = ProductResource::collection($product);
         return $product;
     }
@@ -40,9 +43,7 @@ class ProductController extends Controller
 
     public function update($id, updateProductControllerRequest $request) {
         $data = $request->validated();
-
-        $product = Product::findOrFail($id)->update($data);
-
+        Product::findOrFail($id)->update($data);
         return response()->json([], 201);
     }
 }

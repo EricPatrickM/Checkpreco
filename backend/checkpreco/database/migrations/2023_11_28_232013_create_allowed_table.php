@@ -11,8 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('allowed', function (Blueprint $table) {
+        Schema::create('alloweds', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('fk_stablishments_id')
+                ->references('id')
+                ->on('stablishments')
+            ->nullable(false);
+            $table->foreignId('fk_users_id')
+                ->references('id')
+                ->on('users')
+            ->nullable(false);
             $table->timestamps();
         });
     }

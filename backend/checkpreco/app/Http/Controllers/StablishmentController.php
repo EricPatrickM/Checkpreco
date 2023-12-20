@@ -12,16 +12,15 @@ class StablishmentController extends Controller
         $data = $request->validated();
         $stablishment = Stablishment::create($data);
         
-        if(! $stablishment){
-            return response()->json([], 500);
+        if($stablishment){
+            return response()->json([], 201);
         }
-        return response()->json([], 201);
+        return response()->json([], 500);
     }
-
-    public function show(){
-        $stablishment = Stablishment::orderBy('name')->paginate(10);
-        $stablishment->data = StablishmentResource::collection($stablishment);
-        return response()->json($stablishment);
+    
+    public function show($id){
+        $stablishment = Stablishment::where('fk_stablishment_types_id', $id)->orderBy('name')->paginate(10);
+        return response()->json($stablishment, 200);
     }
     
     public function delete($id){
@@ -29,13 +28,9 @@ class StablishmentController extends Controller
         return response()->json([], 204);
     }
     
-
     public function update($id, AllStablishmentControllerRequest $request){
         $data = $request->validated();
-        $stablishment = Stablishment::findOrFail($id)->update($data);
-        if ($stablishment == 0) {
-            return response()->json(['errors' => 'Nenhum item encontrado'], 404);
-        }
+        Stablishment::findOrFail($id)->update($data);
         return response()->json([], 204);
     }
 }

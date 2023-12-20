@@ -12,15 +12,15 @@ class Stablishment extends Model
     protected $table = 'stablishments';
     protected $fillable = [
         'name',
-        'fk_stablishment_type_id',
+        'fk_stablishment_types_id',
         'fk_address_id'
     ];
 
     public function stablishmentType(): BelongsTo{
-        return $this->belongsTo(StablishmentType::class, 'fk_stablishment_type_id');
+        return $this->belongsTo(StablishmentType::class, 'fk_stablishment_types_id');
     }
 
-    public function address(): BelongsTo{
+    public function Address(): BelongsTo{
         return $this->belongsTo(Address::class, 'fk_address_id');
     }
 }

@@ -17,6 +17,7 @@ class Product extends Model
         'description',
         'measurementUnit',
         'barCode',
+        'fk_stablishment_types_id'
     ];
 
     /*public function register(): BelongsTo{

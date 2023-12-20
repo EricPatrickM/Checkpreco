@@ -12,20 +12,12 @@ use App\Models\User;
 class Register extends Model
 {
     use HasFactory;
-    
-    public function product():HasOne{
-        return $this->hasOne(Product::class);
-    }
 
-    public function batch():HasOne{
-        return $this->hasOne(Batch::class);
-    }
-
-    public function user():HasOne{
-        return $this->hasOne(User::class);
-    }
-
-    /*public function establishment(){
-        return $this->hasOne(Product);
-    }*/
+    protected $fillable = [
+        'fk_stablishment_types_id',
+        'fk_products_id',
+        'fk_users_id',
+        'fk_batchs_id',
+        'price',
+    ];
 }

@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('batchs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->unsignedBigInteger('fk_stablishment_types_id');
+            $table->foreign('fk_stablishment_types_id')
+                ->references('id')
+                ->on('stablishment_types')
+                ->onDelete('cascade')
+            ->nullable(false);
             $table->timestamps();
         });
     }

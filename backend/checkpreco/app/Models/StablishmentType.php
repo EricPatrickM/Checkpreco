@@ -15,8 +15,11 @@ class StablishmentType extends Model
         'name'
     ];
 
-    public function stablishment(): HasMany
-    {
-        return $this->hasMany(Stablishment::class, 'fk_stablishment_type_id');
+    public function Batches(): HasMany{
+        return $this->hasMany(Batch::class, 'id', 'fk_stablishment_types_id');
+    }
+
+    public function Stablishment(): HasMany{
+        return $this->hasMany(Stablishment::class, 'id', 'fk_stablishment_types_id');
     }
 }
