@@ -19,7 +19,10 @@ class StablishmentController extends Controller
     }
     
     public function show($id){
-        $stablishment = Stablishment::where('fk_stablishment_types_id', $id)->orderBy('name')->paginate(10);
+        $stablishment = Stablishment::with('address')
+            ->where('fk_stablishment_types_id', $id)
+            ->orderBy('stablishments.name')
+        ->paginate(10);
         return response()->json($stablishment, 200);
     }
     

@@ -5,6 +5,8 @@ version: '3'
 services:
   mariadb:
     image: docker.io/bitnami/mariadb:11.1
+    ports:
+      - '7999:3306'
     environment:
       # ALLOW_EMPTY_PASSWORD is recommended only for development.
       - ALLOW_EMPTY_PASSWORD=yes

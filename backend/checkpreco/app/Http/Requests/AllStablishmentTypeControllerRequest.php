@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AllStablishmentTypeControllerRequest extends FormRequest
 {
@@ -21,8 +22,10 @@ class AllStablishmentTypeControllerRequest extends FormRequest
      */
     public function rules(): array
     {
+        $id = $this->route("id");
         return [
-            'name' => 'required|min:2|max:255|unique:stablishment_types',
+            'id' => 'number',
+            'name' => ['required','min:2','max:255', Rule::unique('stablishment_types', 'name')->ignore($id)]
         ];
     }
 }

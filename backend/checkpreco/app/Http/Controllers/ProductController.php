@@ -16,7 +16,7 @@ use App\Http\Resources\ProductResource;
 class ProductController extends Controller
 {
     public function searchBarCode($id){
-        $data = Product::select('id')->where('barCode', $id)->get()->first();
+        $data = Product::select(['id', 'name'])->where('barCode', $id)->get()->first();
         return response()->json($data, 200);
     }
 
@@ -27,7 +27,7 @@ class ProductController extends Controller
         if($user){
             return response()->json([], 201);
         }
-        return(response()->json([], 500));
+        abort(500);
     }
 
     public function show($id) {

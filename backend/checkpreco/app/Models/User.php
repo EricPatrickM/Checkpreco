@@ -51,7 +51,7 @@ class User extends Authenticatable
     ];
 
 
-    /*public function register(): BelongsTo{
-        return $this->belongsTo(Register::class);
-    }*/
+    public function register(){
+        return $this->hasMany(Register::class,'id', 'fk_user_id');
+    }
 }

@@ -17,6 +17,6 @@ class Address extends Model
     ];
 
     public function stablishment(): HasMany {
-        return $this->HasMany(Stablishment::class, 'fk_address_id');
+        return $this->hasMany(Stablishment::class, 'id', 'fk_address_id');
     }
 }

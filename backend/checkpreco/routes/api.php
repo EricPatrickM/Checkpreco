@@ -12,75 +12,84 @@ use App\Http\Controllers\StablishmentTypeController;
 use App\Http\Controllers\AllowedController;
 use App\Http\Controllers\UserController;
 
-Route::prefix('login')->group(function() {
-    Route::post('/authenticate', [LoginController::class, 'authenticate']);
-});
+Route::post('/login', [LoginController::class, 'authenticate']);
 
-Route::/*middleware('auth:sanctum')->*/controller(StablishmentTypeController::class)->prefix('stablishmentType')->group(function(){
-    Route::get('', 'show');
-    Route::post('', 'create');
-    Route::delete('/{id}', 'delete');
-    Route::put('/{id}', 'update');
-});
+Route::middleware('auth:sanctum')
+    ->controller(StablishmentTypeController::class)
+    ->prefix('stablishmentType')->group(function () {
+        Route::get('', 'show');
+        Route::middleware('AdminOnly')->post('', 'create');
+        Route::middleware('AdminOnly')->delete('/{id}', 'delete');
+        Route::middleware('AdminOnly')->put('/{id}', 'update');
+    });
 
-Route::/*middleware('auth:sanctum')->*/controller(BatchController::class)->prefix('batch')->group(function(){
-    Route::get('/{id}', 'show');
-    Route::post('', 'create');
-    Route::delete('/{id}', 'delete');
-    Route::put('/{id}', 'update');
-});
+Route::middleware('auth:sanctum')
+    ->controller(StablishmentController::class)
+    ->prefix('stablishment')->group(function () {
+        Route::get('/{stablishmentType}', 'show');
+        Route::middleware('AdminOnly')->post('', 'create');
+        Route::middleware('AdminOnly')->delete('/{id}', 'delete');
+        Route::middleware('AdminOnly')->put('/{id}', 'update');
+    });
 
-Route::/*middleware('auth:sanctum')->*/controller(StablishmentController::class)->prefix('stablishment')->group(function(){
-    Route::get('/{id}', 'show');
-    Route::post('', 'create');
-    Route::delete('/{id}', 'delete');
-    Route::put('/{id}', 'update');
-});
+Route::middleware('auth:sanctum')
+    ->controller(BatchController::class)
+    ->prefix('batch')->group(function () {
+        Route::get('/{stablishmentTypeId}', 'show');
+        Route::middleware('AdminOnly')->post('', 'create');
+        Route::middleware('AdminOnly')->delete('/{id}', 'delete');
+        Route::middleware('AdminOnly')->put('/{stablishmentId}', 'update');
+    });
 
-Route::/*middleware('auth:sanctum')->*/controller(AddressController::class)->prefix('address')->group(function(){
-    Route::get('/search/city/{city}', 'searchCity');
-    Route::get('/search/neighborhood/{city}/{neighborhood}', 'searchNeighborhood');
-    
-    
-    Route::get('/showState', 'showState');
-    Route::get('/{id}', 'showById');
-    Route::get('/showCity/{UF}', 'showCity');
-    Route::get('/showNeighborhood/{city}', 'showNeighborhood');
-    
-    Route::post('', 'create');
-    Route::delete('/{id}', 'delete');
-});
+Route::middleware(['auth:sanctum', 'AdminOnly'])
+    ->controller(AddressController::class)->prefix('address')
+    ->group(function () {
+        Route::get('/search/city/{city}', 'searchCity');
+        Route::get('/search/neighborhood/{city}', 'showNeighborhood');
+        Route::get('/search/neighborhood/{city}/{neighborhood}', 'searchNeighborhood');
+        Route::get('/search/state', 'showState');
+        Route::get('/search/state/{UF}', 'searchUF');
+        Route::get('/search/{id}', 'showById');
 
-Route::/*middleware('auth:sanctum')->*/controller(ProductController::class)->prefix('product')->group(function(){
-    Route::get('/search/{id}', 'searchBarCode');
-    
-    Route::get('/{id}', 'show');
-    Route::post('', 'create');
-    Route::delete('/{id}', 'delete');
-    Route::put('/{id}', 'update');
-});
+        Route::middleware('AdminOnly')->post('', 'create');
+        Route::middleware('AdminOnly')->delete('/{id}', 'delete');
+    });
 
-Route::/*middleware('auth:sanctum')->*/controller(AllowedController::class)->prefix('allowed')->group(function(){
-    Route::get('/{id}', 'show');
-    Route::post('', 'create');
-    Route::delete('/{id}', 'delete');
-});
+Route::middleware('auth:sanctum')
+    ->controller(ProductController::class)
+    ->prefix('product')->group(function () {
+        Route::get('/search/{id}', 'searchBarCode');
+        Route::get('/{stablishmentid}', 'show');
 
-Route::/*middleware('auth:sanctum')->*/controller(UserController::class)->prefix('users')->group(function(){
-    Route::get('', 'show');
-    Route::post('', 'create');
-    Route::delete('/{id}', 'delete');
-    Route::put('/{id}', 'update');
-});
+        Route::middleware('AdminOnly')->post('', 'create');
+        Route::middleware('AdminOnly')->delete('/{id}', 'delete');
+        Route::middleware('AdminOnly')->put('/{id}', 'update');
+    });
 
-Route::/*middleware('auth:sanctum')->*/controller(RegisterController::class)->prefix('register')->group(function(){
-    Route::get('/{type}/{batch}', 'show');
-    Route::post('/', 'create');
-    Route::delete('/{id}', 'delete');
-    Route::put('/{id}', 'update');
-});
+Route::middleware(['auth:sanctum', 'AdminOnly'])
+    ->controller(AllowedController::class)
+    ->prefix('allowed')->group(function () {
+        Route::get('', 'index');
+        Route::post('', 'create');
+        Route::delete('/{id}', 'delete');
+    });
 
-Route::any('*', function(){
-    return response()->json([],404);
-    //abort(404);
-});
+Route::middleware(['auth:sanctum', 'AdminOnly'])
+    ->controller(UserController::class)
+    ->prefix('users')->group(function () {
+        Route::get('', 'show');
+        Route::post('', 'create');
+        Route::delete('/{id}', 'delete');
+        Route::put('/{id}', 'update');
+    });
+
+Route::middleware('auth:sanctum')
+    ->controller(RegisterController::class)
+    ->prefix('register')->group(function () {
+        Route::get('/{stab}/{batch}', 'show');
+        Route::get('/history/{stab}/{prod}', 'showProductHistoric');
+
+        Route::middleware('AdminOnly')->put('/{id}', 'update');
+    });
+
+#Registro de login para acompanhar as horas

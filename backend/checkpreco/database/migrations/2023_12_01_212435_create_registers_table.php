@@ -16,7 +16,7 @@ return new class extends Migration
             $table->double('price', 5, 2)->nullable(true);
             $table->unsignedBigInteger('fk_products_id');
             $table->unsignedBigInteger('fk_users_id');
-            $table->unsignedBigInteger('fk_stablishment_types_id');
+            $table->unsignedBigInteger('fk_stablishments_id');
             $table->unsignedBigInteger('fk_batchs_id');
 
             $table->foreign('fk_products_id')
@@ -31,9 +31,9 @@ return new class extends Migration
                 ->onDelete('cascade')
             ->nullable(true);
 
-            $table->foreign('fk_stablishment_types_id')
+            $table->foreign('fk_stablishments_id')
                 ->references('id')
-                ->on('stablishment_types')
+                ->on('stablishments')
                 ->onDelete('cascade')
             ->nullable(false);
 

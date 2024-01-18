@@ -14,10 +14,26 @@ class Register extends Model
     use HasFactory;
 
     protected $fillable = [
-        'fk_stablishment_types_id',
+        'price',
         'fk_products_id',
         'fk_users_id',
+        'fk_stablishment',
         'fk_batchs_id',
-        'price',
     ];
+
+    public function batch(){
+        return $this->belongsTo(Batch::class, 'fk_batch_id', 'id');
+    }
+
+    public function product(){
+        return $this->belongsTo(Product::class, 'fk_product_id', 'id');
+    }
+
+    public function stablishment(){
+        return $this->belongsTo(Stablishment::class, 'fk_product_id', 'id');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'fk_product_id', 'id');
+    }
 }

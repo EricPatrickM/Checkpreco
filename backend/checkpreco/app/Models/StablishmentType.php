@@ -15,11 +15,20 @@ class StablishmentType extends Model
         'name'
     ];
 
-    public function Batches(): HasMany{
+    protected $visible =[
+        'id',
+        'name',
+    ];
+
+    public function batches(): hasMany{
         return $this->hasMany(Batch::class, 'id', 'fk_stablishment_types_id');
     }
 
-    public function Stablishment(): HasMany{
+    public function stablishment(): hasMany{
         return $this->hasMany(Stablishment::class, 'id', 'fk_stablishment_types_id');
+    }
+
+    public function product(): hasMany{
+        return $this->hasMany(Product::class, 'id', 'fk_stablishment_types_id');
     }
 }
