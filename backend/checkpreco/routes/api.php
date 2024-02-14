@@ -41,7 +41,7 @@ Route::middleware('auth:sanctum')
         Route::middleware('AdminOnly')->put('/{stablishmentId}', 'update');
     });
 
-Route::middleware(['auth:sanctum', 'AdminOnly'])
+Route::middleware(['auth:sanctum'])
     ->controller(AddressController::class)->prefix('address')
     ->group(function () {
         Route::get('/search/city/{city}', 'searchCity');
@@ -89,7 +89,7 @@ Route::middleware('auth:sanctum')
         Route::get('/{stab}/{batch}', 'show');
         Route::get('/history/{stab}/{prod}', 'showProductHistoric');
 
-        Route::middleware('AdminOnly')->put('/{id}', 'update');
+        Route::put('/{id}', 'update');
     });
 
 #Registro de login para acompanhar as horas
