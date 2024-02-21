@@ -20,6 +20,7 @@ class Product extends Model
     ];
 
     protected $visible = [
+        'id'
         'name',
         'description',
         'measurementUnit',
