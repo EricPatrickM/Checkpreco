@@ -17,7 +17,7 @@ class Register extends Model
         'price',
         'fk_products_id',
         'fk_users_id',
-        'fk_stablishment',
+        'fk_stablishments_id',
         'fk_batchs_id',
     ];
 

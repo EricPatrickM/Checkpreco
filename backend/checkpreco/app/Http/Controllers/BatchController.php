@@ -31,7 +31,7 @@ class BatchController extends Controller
                         'fk_products_id' => $product->id,
                         'fk_users_id' => 1,
                         'fk_stablishments_id' => $stablishment->id,
-                        'fk_batchs_id' => $fk_stablishment_types_id,
+                        'fk_batchs_id' => $batch->id,
                     ]);
                 }
             }
