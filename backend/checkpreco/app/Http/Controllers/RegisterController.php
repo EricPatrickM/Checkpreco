@@ -37,8 +37,8 @@ class RegisterController extends Controller
         $register = Register::findOrFail($id);
         $register->fk_user_id = Auth::user()->id;
         $register->price = $data['price'];
-        return response()->json('passou', 200);
         $register->save();
+        return response()->json('passou', 200);
         return response()->json([], 200);
     }
 }
