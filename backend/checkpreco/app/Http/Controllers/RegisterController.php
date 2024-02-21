@@ -13,7 +13,6 @@ class RegisterController extends Controller
 {
     public function show($stab, $batch)
     {
-        return response()->json(Rei, 200);
         $data = Register::where('fk_stablishments_id', $stab)
             ->where('fk_batchs_id', $batch)
             ->paginate(10);
