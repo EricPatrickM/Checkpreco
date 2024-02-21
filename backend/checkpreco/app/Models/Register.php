@@ -16,7 +16,7 @@ class Register extends Model
     protected $fillable = [
         'price',
         'fk_products_id',
-        'fk_users_id',
+        'fk_user_id',
         'fk_stablishments_id',
         'fk_batchs_id',
     ];
