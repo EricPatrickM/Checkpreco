@@ -26,7 +26,7 @@ class AllowedController extends Controller
     }
 
     public function show($id){
-        $data = Allowed::where('fk_users_id', $id)->paginate(10);
+        $data = Allowed::where('id', $id)->paginate(10);
         return response()->json($data, 200);
     }
 

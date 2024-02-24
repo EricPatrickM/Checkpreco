@@ -12,10 +12,16 @@ use Exception;
 
 class BatchController extends Controller
 {
+    
     public function create(createBatchControllerRequest $request)
     {
         $data = $request->validated();
         $fk_stablishment_types_id = $data['fk_stablishment_types_id'];
+        $name = $data['name'];
+        if(Batch::where('fk_stablishment_types_id', $fk_stablishment_types_id)->
+            where('name', $data->name)->get()){
+            return response()->json([], 400);
+        }
 
         $batch = Batch::create($data);
         $products = Product::where('fk_stablishment_types_id', $fk_stablishment_types_id)->get();

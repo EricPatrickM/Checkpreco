@@ -21,12 +21,19 @@ class StablishmentController extends Controller
     }
     
     public function show($id){
-        $stablishment = Stablishment::
+        if(Auth::user()->type=='admin'){
+            $stablishment = Stablishment::
+            ->where('stablishments.fk_stablishment_types_id', $id)
+            ->orderBy('stablishments.name')
+            ->paginate(10);
+        }else {
+            $stablishment = Stablishment::
             join('alloweds', 'stablishments.id', '=', 'alloweds.fk_stablishments_id')
             ->where('alloweds.fk_users_id', Auth::user()->id)
             ->where('stablishments.fk_stablishment_types_id', $id)
             ->orderBy('stablishments.name')
-        ->paginate(10);
+            ->paginate(10);
+        }
         return response()->json($stablishment, 200);
     }
     

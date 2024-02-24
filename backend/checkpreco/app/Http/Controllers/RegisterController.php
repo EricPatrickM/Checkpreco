@@ -30,11 +30,18 @@ class RegisterController extends Controller
 
     public function update($id, Request $request)
     {
+        
         $data = $request->validate([
             'price' => ['required', 'regex:/^\d{1,3}(,\d{3})*(\.\d{1,2})?$/'],
         ]);
-
+        
         $register = Register::findOrFail($id);
+        if(!Allowed::where('fk_users_id', Auth::user()->id)->
+            where('fk_stablishments_id', $register->fk_stablishments_id)->
+            exists() && Auth::user()->type != 'admin'){
+                return response()->json([], 401);
+        }
+
         $register->fk_users_id = Auth::user()->id;
         $register->price = $data['price'];
         $register->save();
