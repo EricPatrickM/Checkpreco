@@ -69,7 +69,7 @@ Route::middleware('auth:sanctum')
 Route::middleware(['auth:sanctum', 'AdminOnly'])
     ->controller(AllowedController::class)
     ->prefix('allowed')->group(function () {
-        Route::get('', 'index');
+        Route::get('/{id}', 'show');
         Route::post('', 'create');
         Route::delete('/{id}', 'delete');
     });

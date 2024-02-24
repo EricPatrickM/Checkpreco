@@ -12,6 +12,11 @@ class AllowedController extends Controller
 {
     public function create(AllAllowedControllerRequest $request){
         $data = $request->validated();
+        if(Allowed::where('fk_stablishments_id', $data['fk_stablishments_id'])
+            ->where('fk_users_id', $data['fk_users_id'])
+        ->exists()){
+            return response()->json([], 406);
+        }
         $allow = Allowed::create($data);
 
         if($allow){
@@ -21,7 +26,7 @@ class AllowedController extends Controller
     }
 
     public function show($id){
-        $data = Allowed::where('id', $id)->paginate(10);
+        $data = Allowed::where('fk_users_id', $id)->paginate(10);
         return response()->json($data, 200);
     }
 
