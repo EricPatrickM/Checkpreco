@@ -12,6 +12,7 @@ use Exception;
 
 class BatchController extends Controller
 {
+    
     public function create(createBatchControllerRequest $request)
     {
         $data = $request->validated();

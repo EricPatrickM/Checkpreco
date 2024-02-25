@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Stablishment;
+use App\Models\Allowed;
 use App\Http\Requests\AllStablishmentControllerRequest;
 use App\Http\Resources\stablishment\StablishmentResource;
+use Illuminate\Support\Facades\Auth;
 
 class StablishmentController extends Controller
 {
@@ -19,8 +21,9 @@ class StablishmentController extends Controller
     }
     
     public function show($id){
-        $stablishment = Stablishment::with('address')
-            ->where('fk_stablishment_types_id', $id)
+        if(Auth::user()->type=='admin'){
+            $stablishment = Stablishment::
+            ->where('stablishments.fk_stablishment_types_id', $id)
             ->orderBy('stablishments.name')
             ->paginate(6);
         return response()->json($stablishment, 200);

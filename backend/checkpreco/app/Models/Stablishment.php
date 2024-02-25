@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\StablishmentType;
+use App\Models\Address;
+use App\Models\Register;
+use App\Models\Allowed;
 
 class Stablishment extends Model
 {
@@ -35,5 +39,9 @@ class Stablishment extends Model
 
     public function register(): hasMany{
         return $this->hasMany(Register::class, 'id', 'fk_stablishment_id');
+    }
+
+    public function allowed(): hasMany{
+        return $this->hasMany(Allowed::class, 'id', 'fk_stablishments_id');
     }
 }
