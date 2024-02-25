@@ -40,7 +40,7 @@ class RegisterController extends Controller
         $register = Register::findOrFail($id);
         if(!Allowed::where('fk_users_id', Auth::user()->id)->
             where('fk_stablishments_id', $register->fk_stablishments_id)->
-            exists()){
+            exists() && Auth::user()->type != 'admin'){
                 return response()->json([], 401);
         }
         $register->fk_users_id = Auth::user()->id;
