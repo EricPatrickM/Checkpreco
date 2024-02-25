@@ -14,4 +14,5 @@ class Allowed extends Model
         'fk_stablishments_id',
         'fk_users_id'
     ];
+    
 }

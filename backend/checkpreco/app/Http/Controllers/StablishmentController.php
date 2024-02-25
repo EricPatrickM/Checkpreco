@@ -22,7 +22,7 @@ class StablishmentController extends Controller
         $stablishment = Stablishment::with('address')
             ->where('fk_stablishment_types_id', $id)
             ->orderBy('stablishments.name')
-        ->paginate(10);
+            ->paginate(6);
         return response()->json($stablishment, 200);
     }
     

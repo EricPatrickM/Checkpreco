@@ -10,6 +10,12 @@ use Exception;
 
 class AllowedController extends Controller
 {
+
+    public function index(){
+        $data = Allowed::paginate(6);
+        return response()->json($data, 200);
+    }
+    
     public function create(AllAllowedControllerRequest $request){
         $data = $request->validated();
         $allow = Allowed::create($data);
@@ -21,7 +27,7 @@ class AllowedController extends Controller
     }
 
     public function show($id){
-        $data = Allowed::where('id', $id)->paginate(10);
+        $data = Allowed::where('id', $id)->paginate(6);
         return response()->json($data, 200);
     }
 

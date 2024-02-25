@@ -16,7 +16,11 @@ class BatchController extends Controller
     {
         $data = $request->validated();
         $fk_stablishment_types_id = $data['fk_stablishment_types_id'];
-
+        $name = $data['name'];
+        if(Batch::where('fk_stablishment_types_id', $fk_stablishment_types_id)->
+            where('name', $name)->exists()){
+            return response()->json([], 400);
+        }
         $batch = Batch::create($data);
         $products = Product::where('fk_stablishment_types_id', $fk_stablishment_types_id)->get();
         $stablishments = Stablishment::where('fk_stablishment_types_id', $fk_stablishment_types_id)->get();
@@ -31,7 +35,7 @@ class BatchController extends Controller
                         'fk_products_id' => $product->id,
                         'fk_users_id' => 1,
                         'fk_stablishments_id' => $stablishment->id,
-                        'fk_batchs_id' => $fk_stablishment_types_id,
+                        'fk_batchs_id' => $batch->id,
                     ]);
                 }
             }
@@ -42,14 +46,14 @@ class BatchController extends Controller
 
     public function show($id)
     {
-        $batch = Batch::where('fk_stablishment_types_id', $id)->orderBy('created_at', 'desc')->paginate(10);
+        $batch = Batch::where('fk_stablishment_types_id', $id)->orderBy('created_at', 'desc')->paginate(5);
         return response()->json($batch, 200);
     }
 
     public function delete($id)
     {
         Batch::findOrFail($id)->delete();
-        Register::where('fk_batch_id', $id)->delete();
+        Register::where('fk_batchs_id', $id)->delete();
         return response()->json([], 204);
     }
 

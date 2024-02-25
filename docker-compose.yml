@@ -29,7 +29,8 @@ services:
       - DB_DATABASE=bitnami_myapp
     volumes:
       - './backend/checkpreco:/app'
-    #command: php artisan migrate 
+    #command: ["composer", "install"]
+    #command: ["php", "artisan", "migrate"]
     #&& php artisan db:seed --class=Neighborhood
     depends_on:
       mariadb:
@@ -65,7 +66,7 @@ services:
     #  - ./static:/code/src/static
     command: npm run dev
     ports:
-      - 8002:80
+      - 8002:5173
     environment:
       - DATABASE_NAME=mysql
       - DATABASE_USER=mysql

@@ -22,7 +22,7 @@ class createBatchControllerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:batchs',
+            'name' => 'required',
             'fk_stablishment_types_id' => 'required|exists:stablishment_types,id'
         ];
     }
