@@ -16,8 +16,5 @@ class Allowed extends Model
         'fk_stablishments_id',
         'fk_users_id'
     ];
-
-    public function stablishments(){
-        return $this->belongsToMany(Stablishments::class, 'fk_users_id', 'id');
-    }
+    
 }

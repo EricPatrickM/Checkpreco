@@ -18,7 +18,7 @@ class StablishmentTypeController extends Controller
     }
 
     public function show(){
-        $stablishment = StablishmentType::orderBy('name')->paginate(15);
+        $stablishment = StablishmentType::orderBy('name')->paginate(5);
         return response()->json($stablishment, 200);
     }
     

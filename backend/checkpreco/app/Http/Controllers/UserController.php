@@ -19,9 +19,10 @@ class UserController extends Controller
     }
 
     public function show() {
-        $product = User::paginate(10);
-        return $product;
-    }
+        $users = User::all();
+        return response()->json($users, 200);
+    }    
+
 
     public function delete($id) {
         User::findOrFail($id)->delete();

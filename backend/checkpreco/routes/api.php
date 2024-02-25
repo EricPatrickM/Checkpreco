@@ -74,13 +74,13 @@ Route::middleware(['auth:sanctum', 'AdminOnly'])
         Route::delete('/{id}', 'delete');
     });
 
-Route::middleware(['auth:sanctum', 'AdminOnly'])
+Route::middleware(['auth:sanctum'])
     ->controller(UserController::class)
     ->prefix('users')->group(function () {
         Route::get('', 'show');
-        Route::post('', 'create');
-        Route::delete('/{id}', 'delete');
-        Route::put('/{id}', 'update');
+        Route::middleware('AdminOnly')->post('', 'create');
+        Route::middleware('AdminOnly')->delete('/{id}', 'delete');
+        Route::middleware('AdminOnly')->put('/{id}', 'update');
     });
 
 Route::middleware('auth:sanctum')

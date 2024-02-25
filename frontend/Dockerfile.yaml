@@ -1,6 +1,0 @@
-FROM node:18-alpine AS development
-WORKDIR /code
-#COPY ./backend/package.json .
-RUN apk update
-RUN npm install npm@latest
-#RUN npm install

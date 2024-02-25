@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Register;
+use App\Models\Allowed;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -15,16 +16,17 @@ class RegisterController extends Controller
     {
         $data = Register::where('fk_stablishments_id', $stab)
             ->where('fk_batchs_id', $batch)
-            ->paginate(10);
+            ->paginate(5);
         return response()->json($data, 200);
     }
 
     public function showProductHistoric($stab, $prod)
     {
         $data = Register::where('fk_stablishments_id', $stab)
-            ->where('fk_products_id', $prod)
-            ->take(3)
-            ->get();
+                ->where('fk_products_id', $prod)
+                ->orderByDesc('updated_at')
+                ->take(3)
+                ->get();
         return response()->json($data, 200);
     }
 
@@ -41,10 +43,9 @@ class RegisterController extends Controller
             exists() && Auth::user()->type != 'admin'){
                 return response()->json([], 401);
         }
-
         $register->fk_users_id = Auth::user()->id;
         $register->price = $data['price'];
         $register->save();
-        return response()->json([], 200);
+        return response()->json($register, 200);
     }
 }

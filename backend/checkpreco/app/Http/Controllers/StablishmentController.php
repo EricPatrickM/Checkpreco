@@ -25,15 +25,7 @@ class StablishmentController extends Controller
             $stablishment = Stablishment::
             ->where('stablishments.fk_stablishment_types_id', $id)
             ->orderBy('stablishments.name')
-            ->paginate(10);
-        }else {
-            $stablishment = Stablishment::
-            join('alloweds', 'stablishments.id', '=', 'alloweds.fk_stablishments_id')
-            ->where('alloweds.fk_users_id', Auth::user()->id)
-            ->where('stablishments.fk_stablishment_types_id', $id)
-            ->orderBy('stablishments.name')
-            ->paginate(10);
-        }
+            ->paginate(6);
         return response()->json($stablishment, 200);
     }
     

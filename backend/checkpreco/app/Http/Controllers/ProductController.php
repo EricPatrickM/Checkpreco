@@ -31,7 +31,7 @@ class ProductController extends Controller
     }
 
     public function show($id) {
-        $product = Product::where('fk_stablishment_types_id', $id)->paginate(10);
+        $product = Product::where('fk_stablishment_types_id', $id)->paginate(6);
         $product->data = ProductResource::collection($product);
         return $product;
     }
