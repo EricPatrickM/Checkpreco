@@ -29,12 +29,13 @@ export function AddLote() {
     mode: "onChange"
   });
   const [submissionResult, setSubmissionResult] = useState<{ success: boolean, message: string | null }>({ success: false, message: null });
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchEstablishmentTypes = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:8000/api/stablishmentType', {
+        const response = await axios.get(`${apiUrl}/stablishmentType`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -81,7 +82,7 @@ export function AddLote() {
         name: data.nome, 
         fk_stablishment_types_id: selectedTypeId 
       };
-      await axios.post('http://localhost:8000/api/batch', requestBody, {
+      await axios.post(`${apiUrl}/batch`, requestBody, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'

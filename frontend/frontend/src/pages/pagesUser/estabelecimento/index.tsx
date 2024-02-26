@@ -49,6 +49,7 @@ export function Estabelecimento() {
   const pathParts = location.pathname.split('/');
   const establishmentType = pathParts[pathParts.length - 2];
   const batchId = pathParts[pathParts.length - 1];
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     fetchEstablishments();
@@ -58,7 +59,7 @@ export function Estabelecimento() {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:8000/api/stablishment/${establishmentType}`, {
+      const response = await axios.get(`${apiUrl}/stablishment/${establishmentType}`, {
         headers: { Authorization: `Bearer ${token}` },
         params: { page: currentPage, per_page: establishmentsPerPage, search: searchQuery },
       });
@@ -82,7 +83,7 @@ export function Estabelecimento() {
       const addresses: Address[] = [];
       for (const establishment of establishments) {
         if (!addressInfo[establishment.id]) {
-          const response = await axios.get(`http://localhost:8000/api/address/search/${establishment.fk_address_id}`, {
+          const response = await axios.get(`${apiUrl}/address/search/${establishment.fk_address_id}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           addresses.push(response.data);
@@ -135,7 +136,7 @@ export function Estabelecimento() {
     try {
       if (establishmentToDelete) {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:8000/api/stablishment/${establishmentToDelete.id}`, {
+        await axios.delete(`${apiUrl}/stablishment/${establishmentToDelete.id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setDeleteModalOpen(false);
@@ -150,7 +151,6 @@ export function Estabelecimento() {
     <Container>
       <div className="w-full min-h-screen flex flex-col items-center gap-4">
         <h1 className="text-4xl font-bold text-black mb-6">Lista de Estabelecimentos</h1>
-        <Link to="/add-estabelecimento" className="bg-green-600 text-white rounded-full px-6 py-3 mb-4 hover:bg-green-700 transition duration-300">Adicionar Estabelecimento</Link>
         <div className="w-full flex justify-center mb-4">
           <input
             type="text"

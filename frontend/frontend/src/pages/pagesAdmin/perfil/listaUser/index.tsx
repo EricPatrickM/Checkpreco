@@ -22,6 +22,7 @@ export function ListaUser() {
   const [userTypeFilter, setUserTypeFilter] = useState<string | null>(null);
   const usersPerPage = 5;
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     async function fetchUsers() {
@@ -34,7 +35,7 @@ export function ListaUser() {
           return;
         }
 
-        const response = await axios.get<User[]>('http://localhost:8000/api/users', {
+        const response = await axios.get<User[]>(`${apiUrl}/users`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -64,7 +65,7 @@ export function ListaUser() {
         return;
       }
 
-      await axios.delete(`http://localhost:8000/api/users/${userId}`, {
+      await axios.delete(`${apiUrl}/users/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

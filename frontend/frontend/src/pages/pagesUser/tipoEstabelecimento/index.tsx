@@ -3,7 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom'; // Importar Link do React Router
 import { Container } from '../../../components/container';
 
-const API_URL = 'http://localhost:8000/api/stablishmentType';
+const apiUrl = import.meta.env.VITE_API_URL;
+const API_URL = `${apiUrl}/stablishmentType`;
 const TYPES_PER_PAGE = 5;
 
 interface EstablishmentType {

@@ -22,11 +22,12 @@ export function AddUser() {
     resolver: zodResolver(schema),
     mode: "onChange"
   });
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const onSubmit = async (data: FormData) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:8000/api/users', {
+      const response = await axios.post(`${apiUrl}/users`, {
         name: data.name,
         email: data.email,
         password: data.password,

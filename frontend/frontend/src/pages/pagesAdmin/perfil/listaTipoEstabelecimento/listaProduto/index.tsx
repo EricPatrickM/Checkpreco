@@ -23,12 +23,13 @@ export function ListaProduto() {
   const productsPerPage = 6;
   const location = useLocation();
   const establishmentType = location.pathname.split('/').pop() || '';
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://localhost:8000/api/product/${establishmentType}?page=${currentPage}`, {
+        const response = await axios.get(`${apiUrl}/product/${establishmentType}?page=${currentPage}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 

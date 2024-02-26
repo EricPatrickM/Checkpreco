@@ -35,10 +35,10 @@ export function Login() {
       }
     }
   }, [navigate]);
-
   const onSubmit = async (data: FormData) => {
+    const apiUrl = import.meta.env.VITE_API_URL;
     try {
-      const response = await axios.post('http://localhost:8000/api/login', {
+      const response = await axios.post(`${apiUrl}/login`, {
         email: data.email,
         password: data.password
       });

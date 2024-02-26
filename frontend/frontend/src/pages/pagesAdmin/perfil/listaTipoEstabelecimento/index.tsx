@@ -5,7 +5,8 @@ import Modal from '../../../../components/modal';
 import { Container } from '../../../../components/container';
 import { Link } from 'react-router-dom';
 
-const API_URL = 'http://localhost:8000/api/stablishmentType';
+const apiUrl = import.meta.env.VITE_API_URL;
+const API_URL = `${apiUrl}/stablishmentType`;
 const TYPES_PER_PAGE = 5;
 
 interface EstablishmentType {

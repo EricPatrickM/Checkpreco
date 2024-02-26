@@ -27,6 +27,7 @@ export function AddPermissoes() {
   const location = useLocation();
   const pathParts = location.pathname.split('/');
   const stablishmentId = pathParts[pathParts.length - 1];
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -38,7 +39,7 @@ export function AddPermissoes() {
           return;
         }
 
-        const response = await axios.get<User[]>('http://localhost:8000/api/users', {
+        const response = await axios.get<User[]>(` ${apiUrl}/users `, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -60,12 +61,14 @@ export function AddPermissoes() {
         fk_users_id: data.userId,
         fk_stablishments_id: stablishmentId
       };
-      const response = await axios.post('http://localhost:8000/api/allowed', requestBody, {
+      console.log(requestBody);
+      const response = await axios.post(` ${apiUrl}/allowed `, requestBody, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
       });
+      console.log(response);
 
       setSubmissionResult({ success: true, message: "Permissão adicionada com sucesso!" });
     } catch (error) {
