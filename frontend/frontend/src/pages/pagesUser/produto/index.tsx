@@ -26,12 +26,13 @@ export function Produto() {
   const establishmentType = pathParts[pathParts.length - 3];
   const batchId = pathParts[pathParts.length - 2];
   const stablishmentId = pathParts[pathParts.length - 1];
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://localhost:8000/api/product/${establishmentType}?page=${currentPage}`, {
+        const response = await axios.get(`${apiUrl}/product/${establishmentType}?page=${currentPage}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
 
@@ -100,7 +101,6 @@ export function Produto() {
     <Container>
       <div className="w-full min-h-screen flex flex-col items-center gap-4">
         <h1 className="text-4xl font-bold text-black mb-6">Lista de Produtos</h1>
-        <Link to="/add-produto" className="bg-green-600 text-white rounded-full px-6 py-3 mb-4 hover:bg-green-700 transition duration-300">Adicionar Produto</Link>
         <div className="w-full flex justify-center mb-4">
           <input
             type="text"

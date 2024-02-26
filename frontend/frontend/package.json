@@ -31,6 +31,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@types/node": "^20.11.20",
     "@types/react": "^18.2.43",
     "@types/react-datepicker": "^4.19.5",
     "@types/react-dom": "^18.2.17",

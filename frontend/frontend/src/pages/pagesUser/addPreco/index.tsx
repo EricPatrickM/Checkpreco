@@ -51,14 +51,14 @@ export function AddPreco() {
   const productName = pathParts[pathParts.length - 1];
   let productNameComEspacos = productName.replace(/%20/g, " ");
   let productNameFinal = decodeURIComponent(productNameComEspacos.replace(/\+/g, ' '));
+  const apiUrl = import.meta.env.VITE_API_URL;
 
-  console.log(batchId, productId);
   useEffect(() => {
     const fetchUserId = async () => {
       try {
         const token = localStorage.getItem('token');
         const email = localStorage.getItem('userEmail');
-        const response = await axios.get('http://localhost:8000/api/users', {
+        const response = await axios.get(`${apiUrl}/users`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (response.data && response.data.length > 0) {
@@ -80,15 +80,13 @@ export function AddPreco() {
       if (!userId) return;
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get<{ data: RegisterItem[] }>(`http://localhost:8000/api/register/${establishmentId}/${batchId}`, {
+        const response = await axios.get<{ data: RegisterItem[] }>(`${apiUrl}/register/${establishmentId}/${batchId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
-        console.log(response);
         const filteredItem = response.data.data.find((item) =>
           item.fk_batchs_id.toString() === batchId.toString() &&
           item.fk_products_id.toString() === productId.toString()
         );
-        console.log(filteredItem);
         if (filteredItem) {
           setRegisterId(filteredItem.id);
         } else {
@@ -106,7 +104,7 @@ export function AddPreco() {
     const fetchPriceHistory = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get<RegisterItem[]>(`http://localhost:8000/api/register/history/${establishmentId}/${productId}`, {
+        const response = await axios.get<RegisterItem[]>(`${apiUrl}/register/history/${establishmentId}/${productId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (!response.data) {
@@ -157,15 +155,16 @@ export function AddPreco() {
   
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.put(`http://localhost:8000/api/register/${registerId}`, {
+      const response = await axios.put(`${apiUrl}/register/${registerId}`, {
         price: proposedPrice
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
+      console.log(response);
       reset();
       setActionStatus('Preço adicionado com sucesso!');
       
-      const updatedPriceHistory = await axios.get<RegisterItem[]>(`http://localhost:8000/api/register/history/${establishmentId}/${productId}`, {
+      const updatedPriceHistory = await axios.get<RegisterItem[]>(`${apiUrl}/register/history/${establishmentId}/${productId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPriceHistory(updatedPriceHistory.data);
@@ -189,7 +188,7 @@ export function AddPreco() {
     if (confirmed) {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.put(`http://localhost:8000/api/register/${registerId}`, {
+        const response = await axios.put(`${apiUrl}/register/${registerId}`, {
           price: newPrice, 
           fk_products_id: productId,
           fk_users_id: userId,
@@ -201,7 +200,7 @@ export function AddPreco() {
         reset();
         setActionStatus('Preço adicionado com sucesso!');
         
-        const updatedPriceHistory = await axios.get<RegisterItem[]>(`http://localhost:8000/api/register/history/${establishmentId}/${productId}`, {
+        const updatedPriceHistory = await axios.get<RegisterItem[]>(`${apiUrl}/register/history/${establishmentId}/${productId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setPriceHistory(updatedPriceHistory.data);

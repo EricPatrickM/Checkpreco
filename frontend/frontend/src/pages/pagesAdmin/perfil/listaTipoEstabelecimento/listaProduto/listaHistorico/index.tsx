@@ -25,6 +25,7 @@ export function ListaHistorico() {
   const pathParts = location.pathname.split('/');
   const stablishmentId = pathParts[pathParts.length - 2];
   const productId = pathParts[pathParts.length - 1];
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -42,7 +43,7 @@ export function ListaHistorico() {
           }
         };
 
-        const response = await axios.get('http://localhost:8000/api/users', config);
+        const response = await axios.get(`${apiUrl}/users`, config);
         setUsers(response.data);
       } catch (error) {
         console.error('Erro ao buscar usuários:', error);
@@ -68,7 +69,7 @@ export function ListaHistorico() {
           }
         };
 
-        const response = await axios.get<RegisterItem[]>(`http://localhost:8000/api/register/history/${stablishmentId}/${productId}`, config);
+        const response = await axios.get<RegisterItem[]>(`${apiUrl}/register/history/${stablishmentId}/${productId}`, config);
         
         const historyWithUserNames = response.data.map(item => {
           const user = users.find(user => user.id === item.fk_users_id);

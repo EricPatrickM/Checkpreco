@@ -34,12 +34,13 @@ export function AddProduto() {
   const [filteredTypes, setFilteredTypes] = useState([]);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchEstablishmentTypes = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:8000/api/stablishmentType', {
+        const response = await axios.get(`${apiUrl}/stablishmentType`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -87,12 +88,14 @@ export function AddProduto() {
       barCode: codigoDeBarras || '',
       fk_stablishment_types_id: tipoEstabelecimentoSelecionado.id,
     };
+    console.log(produto);
     try {
-      const response = await axios.post('http://localhost:8000/api/product', produto, {
+      const response = await axios.post(`${apiUrl}/product`, produto, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(response);
       setSuccessMessage('Produto adicionado com sucesso');
       setErrorMessage(null);
       reset();

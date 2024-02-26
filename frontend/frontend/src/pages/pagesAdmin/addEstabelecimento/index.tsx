@@ -54,7 +54,7 @@ export function AddEstabelecimento() {
         resolver: zodResolver(schema),
         mode: "onChange"
     });
-
+    const apiUrl = import.meta.env.VITE_API_URL;
     // Lista de siglas de estados do Brasil
     const stateOptions = [
         "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", 
@@ -65,7 +65,7 @@ export function AddEstabelecimento() {
         const fetchEstablishmentTypes = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:8000/api/stablishmentType', {
+                const response = await axios.get(`${apiUrl}/stablishmentType`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -82,7 +82,7 @@ export function AddEstabelecimento() {
         const fetchStates = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:8000/api/address/search/state', {
+                const response = await axios.get(`${apiUrl}/address/search/state`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -126,7 +126,7 @@ export function AddEstabelecimento() {
 
         try {
             const token = localStorage.getItem('token');
-            const cityResponse = await axios.get(`http://localhost:8000/api/address/search/city/${city}`, {
+            const cityResponse = await axios.get(`${apiUrl}/address/search/city/${city}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -174,7 +174,7 @@ export function AddEstabelecimento() {
         setSelectedNeighborhood(neighborhood); // Atualiza o valor do bairro selecionado
         try {
             const token = localStorage.getItem('token');
-            const neighborhoodResponse = await axios.get(`http://localhost:8000/api/address/search/neighborhood/${address?.city}`, {
+            const neighborhoodResponse = await axios.get(`${apiUrl}/address/search/neighborhood/${address?.city}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -215,7 +215,7 @@ export function AddEstabelecimento() {
                 state: uf
             };
             try {
-                await axios.post('http://localhost:8000/api/address', requestBody, {
+                await axios.post(`${apiUrl}/address`, requestBody, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -225,7 +225,7 @@ export function AddEstabelecimento() {
             }
     
             let addressId;
-            const addressResponse = await axios.get(`http://localhost:8000/api/address/search/neighborhood/${city}/${neighborhood}`, {
+            const addressResponse = await axios.get(`${apiUrl}/address/search/neighborhood/${city}/${neighborhood}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -244,7 +244,7 @@ export function AddEstabelecimento() {
                 fk_address_id: addressId,
             };
     
-            await axios.post('http://localhost:8000/api/stablishment', stablishmentRequestBody, {
+            await axios.post(`${apiUrl}/stablishment`, stablishmentRequestBody, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

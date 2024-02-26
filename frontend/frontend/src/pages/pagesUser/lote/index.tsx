@@ -3,8 +3,8 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Container } from '../../../components/container';
 
-
-const API_URL_LOTES = 'http://localhost:8000/api/batch';
+const apiUrl = import.meta.env.VITE_API_URL;
+const API_URL_LOTES = `${apiUrl}/batch`;
 const LOTES_PER_PAGE = 5;
 
 interface Lote {

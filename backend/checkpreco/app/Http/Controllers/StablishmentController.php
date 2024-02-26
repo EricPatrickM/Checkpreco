@@ -21,13 +21,20 @@ class StablishmentController extends Controller
     }
     
     public function show($id){
-        if(Auth::user()->type=='admin'){
-            $stablishment = Stablishment::
-            ->where('stablishments.fk_stablishment_types_id', $id)
-            ->orderBy('stablishments.name')
-            ->paginate(6);
-        return response()->json($stablishment, 200);
+        if(Auth::user()->type == 'admin'){
+            $stablishment = Stablishment::where('stablishments.fk_stablishment_types_id', $id)
+                                        ->orderBy('stablishments.name')
+                                        ->paginate(6);
+            return response()->json($stablishment, 200);
+        }else{
+            $stablishment = Stablishment::where('stablishments.fk_stablishment_types_id', $id)
+                                        ->orderBy('stablishments.name')
+                                        ->paginate(6);
+            return response()->json($stablishment, 200);
+        }
+        // Considerar adicionar uma resposta caso o usuário não seja admin
     }
+    
     
     public function delete($id){
         Stablishment::findOrFail($id)->delete();

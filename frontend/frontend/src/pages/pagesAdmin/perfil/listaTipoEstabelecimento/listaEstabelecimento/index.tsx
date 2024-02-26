@@ -47,6 +47,7 @@ export function ListaEstabelecimento() {
   const establishmentsPerPage = 6;
   const location = useLocation();
   const establishmentType = location.pathname.split('/').pop() || '';
+  const apiUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -57,7 +58,7 @@ export function ListaEstabelecimento() {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:8000/api/stablishment/${establishmentType}`, {
+      const response = await axios.get(`${apiUrl}/stablishment/${establishmentType}`, {
         headers: { Authorization: `Bearer ${token}` },
         params: { page: currentPage, per_page: establishmentsPerPage, search: searchQuery },
       });

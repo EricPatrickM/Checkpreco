@@ -35,6 +35,7 @@ export function ListaPermissoes() {
   let stablishmentNameComEspacos = stablishmentName.replace(/%20/g, " ");
   let stablishmentNameFinal = decodeURIComponent(stablishmentNameComEspacos.replace(/\+/g, ' '));
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     fetchPermissions();
@@ -44,7 +45,7 @@ export function ListaPermissoes() {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:8000/api/allowed`, {
+      const response = await axios.get(`${apiUrl}/allowed`, {
         headers: { Authorization: `Bearer ${token}` },
         params: { page: currentPage, per_page: permissionsPerPage, search: searchQuery },
       });
@@ -53,6 +54,7 @@ export function ListaPermissoes() {
       // Filtrar permissionsData pelo fk_stablishments_id
       permissionsData = permissionsData.filter(permission => permission.fk_stablishments_id.toString() === stablishmentId);
   
+      console.log(permissionsData);
       setPermissions(permissionsData);
       setError(null);
   
