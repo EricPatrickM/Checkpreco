@@ -35,9 +35,11 @@ export function Header() {
             </div>
           </Link>
         )}
+        <Link to="/">
         <span className="flex items-center justify-center mr-12">
           <img src={logoImg} alt="Logo do site" />
         </span>
+        </Link>
         <button onClick={handleLogout} className="relative">
           <div className="border-2 rounded-full p-1 border-gray-900">
             <FiLogOut size={24} color="#000" />
