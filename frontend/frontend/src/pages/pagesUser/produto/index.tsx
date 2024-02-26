@@ -101,7 +101,6 @@ export function Produto() {
     <Container>
       <div className="w-full min-h-screen flex flex-col items-center gap-4">
         <h1 className="text-4xl font-bold text-black mb-6">Lista de Produtos</h1>
-        <Link to="/add-produto" className="bg-green-600 text-white rounded-full px-6 py-3 mb-4 hover:bg-green-700 transition duration-300">Adicionar Produto</Link>
         <div className="w-full flex justify-center mb-4">
           <input
             type="text"
