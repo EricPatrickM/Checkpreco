@@ -82,7 +82,7 @@ export function ListaEstabelecimento() {
       const addresses: Address[] = [];
       for (const establishment of establishments) {
         if (!addressInfo[establishment.id]) {
-          const response = await axios.get(`http://localhost:8000/api/address/search/${establishment.fk_address_id}`, {
+          const response = await axios.get(`${apiUrl}/address/search/${establishment.fk_address_id}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           addresses.push(response.data);
@@ -135,7 +135,7 @@ export function ListaEstabelecimento() {
     try {
       if (establishmentToDelete) {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:8000/api/stablishment/${establishmentToDelete.id}`, {
+        await axios.delete(`${apiUrl}/stablishment/${establishmentToDelete.id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setDeleteModalOpen(false);
