@@ -83,7 +83,7 @@ export function ListaProduto() {
   const handleDeleteConfirmed = async (productId: number) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:8000/api/product/${productId}`, {
+      await axios.delete(`${apiUrl}/product/${productId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProducts(products.filter(product => product.id !== productId));

@@ -74,7 +74,7 @@ export function ListaPermissoes() {
   async function fetchUsers(userIds: number[]) {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:8000/api/users`, {
+      const response = await axios.get(`${apiUrl}/users`, {
         headers: { Authorization: `Bearer ${token}` },
         params: { ids: userIds },
       });
@@ -136,7 +136,7 @@ export function ListaPermissoes() {
     try {
       if (permissionToDelete) {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:8000/api/allowed/${permissionToDelete.id}`, {
+        await axios.delete(`${apiUrl}/allowed/${permissionToDelete.id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setDeleteModalOpen(false); // Fecha o modal após a exclusão
