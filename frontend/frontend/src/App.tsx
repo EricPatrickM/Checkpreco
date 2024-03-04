@@ -94,7 +94,7 @@ const router = createBrowserRouter([
         element: <AdminOnly><ListaProduto/></AdminOnly>
       },
       {
-        path: "/lista-historico-admin/:typeId/:productId",
+        path: "/lista-historico-admin/:typeId/:productId/:productName",
         element: <AdminOnly><ListaHistorico/></AdminOnly>
       },
       {
