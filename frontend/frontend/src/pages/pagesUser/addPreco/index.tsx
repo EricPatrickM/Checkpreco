@@ -259,7 +259,7 @@ export function AddPreco() {
           {error && <p className='text-red-500 text-xs italic mt-2'>{error}</p>}
           {actionStatus && <p className={`text-xs mt-2 ${actionStatus.includes('sucesso') ? 'text-green-500' : 'text-red-500'}`}>{actionStatus}</p>}
           <button
-            className="mt-4 bg-red-600 w-full rounded-md text-white h-10 font-medium hover:bg-red-700"
+            className="mt-4 bg-red-700 w-full rounded-md text-white h-10 font-medium hover:bg-red-700"
             onClick={handleProductNotAvailable}
           >
             Produto não disponível
