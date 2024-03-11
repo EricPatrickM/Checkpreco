@@ -83,7 +83,7 @@ export function ListaProduto() {
   const handleDeleteConfirmed = async (productId: number) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`${apiUrl}/product/${productId}`, {
+      await axios.delete(`${apiUrl}product/${productId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProducts(products.filter(product => product.id !== productId));
@@ -142,7 +142,7 @@ export function ListaProduto() {
                     </div>
                     <div className="flex justify-center mt-4">
                       <Link
-                        to={`/lista-historico-admin/${establishmentType}/${product.id}`}
+                        to={`/lista-historico-admin/${establishmentType}/${product.id}/${product.name}`}
                         className="bg-green-600 text-white rounded-full px-4 py-2 ml-2"
                       >
                         Gerenciar Histórico

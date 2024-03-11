@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Container } from "../../../components/container";
 import { useForm } from 'react-hook-form';
@@ -217,6 +217,23 @@ export function AddPreco() {
     }
   };
 
+  const handleProductNotAvailable = async () => {
+    const token = localStorage.getItem('token');
+    const response = await axios.put(`${apiUrl}/register/${registerId}`, {
+      price: 999
+    }, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    console.log(response);
+    reset();
+    setActionStatus('Preço alterado para "Produto não disponível" com sucesso!');
+    
+    const updatedPriceHistory = await axios.get<RegisterItem[]>(`${apiUrl}/register/history/${establishmentId}/${productId}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    setPriceHistory(updatedPriceHistory.data);
+  };
+
   return (
     <Container>
       <div className="w-full min-h-screen flex flex-col items-center gap-4">
@@ -241,29 +258,35 @@ export function AddPreco() {
           </button>
           {error && <p className='text-red-500 text-xs italic mt-2'>{error}</p>}
           {actionStatus && <p className={`text-xs mt-2 ${actionStatus.includes('sucesso') ? 'text-green-500' : 'text-red-500'}`}>{actionStatus}</p>}
+          <button
+            className="mt-4 bg-red-700 w-full rounded-md text-white h-10 font-medium hover:bg-red-700"
+            onClick={handleProductNotAvailable}
+          >
+            Produto não disponível
+          </button>
         </form>
         <div className="mt-8">
           <h2 className="text-lg flex items-center font-semibold mb-2"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>Histórico de Preços</h2>
           {priceHistory.length > 0 ? (
-  <table className="w-full border-collapse border border-gray-300">
-    <thead>
-      <tr className="bg-gray-200">
-        <th className="border border-gray-300 px-4 py-2">Data e Hora</th>
-        <th className="border border-gray-300 px-4 py-2">Preço</th>
-      </tr>
-    </thead>
-    <tbody>
-      {priceHistory
-        .filter(item => item.price !== null && !isNaN(parseFloat(item.price)))
-        .map((item, index) => (
-          <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
-            <td className="border border-gray-300 px-4 py-2">{formatDateTime(item.updated_at ? item.updated_at : item.created_at)}</td>
-            <td className="border border-gray-300 px-4 py-2">{parseFloat(item.price).toFixed(2)}</td>
-          </tr>
-        ))}
-    </tbody>
-  </table>
-) : null}
+            <table className="w-full border-collapse border border-gray-300">
+              <thead>
+                <tr className="bg-gray-200">
+                  <th className="border border-gray-300 px-4 py-2">Data e Hora</th>
+                  <th className="border border-gray-300 px-4 py-2">Preço</th>
+                </tr>
+              </thead>
+              <tbody>
+                {priceHistory
+                .filter(item => item.price !== null && !isNaN(parseFloat(item.price)))
+                .map((item, index) => (
+                  <tr key={index} className={index % 2 === 0 ? 'bg-gray-100' : ''}>
+                    <td className="border border-gray-300 px-4 py-2">{formatDateTime(item.updated_at ? item.updated_at : item.created_at)}</td>
+                    <td className="border border-gray-300 px-4 py-2">{parseFloat(item.price) === 999 ? 'Não Disponível' : parseFloat(item.price).toFixed(2)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : null}
 
         </div>
       </div>
